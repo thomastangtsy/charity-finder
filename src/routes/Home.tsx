@@ -1,5 +1,5 @@
-import { FC, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import CharityList from "../components/CharityList";
 import LoadingSpinner from "../components/LoadingSpinner";
 import NoResult from "../components/NoResult";
@@ -27,6 +27,7 @@ const Home: FC = () => {
 
   useEffect(() => {
     if (query) {
+      console.log(query);
       fetchSearch(query, { take: 12 });
     }
   }, [fetchSearch, query]);
@@ -37,6 +38,14 @@ const Home: FC = () => {
       fetchBrowse(cause, { take: 12 });
     }
   }, [cause, fetchBrowse, isBrowseFetched, query]);
+
+  const navigate = useNavigate();
+  const navigateCharity = useCallback(
+    (slug: string) => {
+      navigate(`/charity/${encodeURIComponent(slug)}`);
+    },
+    [navigate],
+  );
 
   return (
     <div className="w-full">
@@ -50,6 +59,7 @@ const Home: FC = () => {
       ) : (
         <CharityList
           charities={query ? searchState.charities : browseState.charities}
+          navigateCharity={navigateCharity}
         />
       )}
     </div>

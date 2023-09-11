@@ -7,9 +7,7 @@ const Frame: FC = () => {
 
   const navigateSearch = useCallback(
     (term: string) => {
-      const params = new URLSearchParams({
-        query: encodeURIComponent(term),
-      });
+      const params = new URLSearchParams({ query: term });
       navigate(`/?${params.toString()}`);
     },
     [navigate],
