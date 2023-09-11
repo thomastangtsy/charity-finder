@@ -17,27 +17,29 @@ const Header: FC<HeaderProps> = ({ search, navigateHome }) => {
   );
 
   return (
-    <header className="w-full bg-lime-900 text-white px-4 py-6 space-y-2 flex flex-col lg:flex-row lg:space-y-0 lg:space-x-3 lg:justify-between">
-      <h1 className="text-3xl font-bold text-center" onClick={navigateHome}>
-        Charity Finder
-      </h1>
-      <div className="flex justify-center">
-        <input
-          className="rounded-l bg-white p-2 text-lime-900 w-full max-w-[24rem] lg:w-[24rem]"
-          type="text"
-          placeholder="Search"
-          onChange={onChange}
-          value={searchTerm}
-        />
-        <button
-          className="rounded-r bg-lime-600 p-2"
-          onClick={() => search(searchTerm)}
-        >
-          <MagnifyingGlassIcon className="h-6 w-6" />
-        </button>
-        <button className="rounded bg-lime-600 p-2 ml-4">
-          <BookmarkIcon className="h-6 w-6" />
-        </button>
+    <header className="w-full bg-lime-900 text-white py-6">
+      <div className="container mx-auto px-2 space-y-2 flex flex-col md:flex-row md:space-y-0 md:space-x-3 md:justify-between">
+        <h1 className="text-3xl font-bold text-center" onClick={navigateHome}>
+          Charity Finder
+        </h1>
+        <div className="flex justify-center">
+          <input
+            className="rounded-l bg-white p-2 text-lime-900 w-full max-w-[24rem] lg:w-[24rem]"
+            type="text"
+            placeholder="Search"
+            onChange={onChange}
+            value={searchTerm}
+          />
+          <button
+            className="rounded-r bg-lime-600 p-2"
+            onClick={() => search(searchTerm)}
+          >
+            <MagnifyingGlassIcon className="h-6 w-6" />
+          </button>
+          <button className="rounded bg-lime-600 p-2 ml-4">
+            <BookmarkIcon className="h-6 w-6" />
+          </button>
+        </div>
       </div>
     </header>
   );
