@@ -1,16 +1,27 @@
-import { FC } from "react";
-import { Outlet } from "react-router-dom";
+import { FC, useCallback } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 
-interface FrameProps {
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
-}
+const Frame: FC = () => {
+  const navigate = useNavigate();
 
-const Frame: FC<FrameProps> = (props) => {
+  const navigateSearch = useCallback(
+    (term: string) => {
+      const params = new URLSearchParams({
+        query: encodeURIComponent(term),
+      });
+      navigate(`/?${params.toString()}`);
+    },
+    [navigate],
+  );
+
+  const navigateHome = useCallback(() => {
+    navigate("/");
+  }, [navigate]);
+
   return (
     <div className="w-full min-h-screen overflow-y-hidden overflow-x-auto">
-      <Header {...props} />
+      <Header search={navigateSearch} navigateHome={navigateHome} />
       <Outlet />
     </div>
   );
