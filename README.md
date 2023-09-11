@@ -6,8 +6,15 @@ Easily search for charities in the city.
 
 - [Node.js v20](https://nodejs.org)
 - [Yarn](https://yarnpkg.com)
+- Public API key from [every.org](https://www.every.org/charity-api)
 
 ## Quick Start
+
+Copy and edit public API key from every.org:
+```sh
+cp .env.example .env
+# Modify the environment variables
+```
 
 Install dependencies:
 
