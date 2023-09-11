@@ -1,6 +1,7 @@
 import { GlobeAltIcon } from "@heroicons/react/24/outline";
-import { MapPinIcon } from "@heroicons/react/24/solid";
+import { BookmarkIcon, MapPinIcon } from "@heroicons/react/24/solid";
 import { FC, useEffect } from "react";
+import useFavorite from "../hooks/useFavorite";
 import DetailCharity from "../models/detailCharity";
 
 interface CharityDetailProps {
@@ -8,6 +9,8 @@ interface CharityDetailProps {
 }
 
 const CharityDetail: FC<CharityDetailProps> = ({ charity }) => {
+  const { hasFavorite, toggleFavorite } = useFavorite();
+
   useEffect(() => console.log(charity));
   return (
     <div className="w-full">
@@ -35,6 +38,20 @@ const CharityDetail: FC<CharityDetailProps> = ({ charity }) => {
       <div className="container mx-auto px-2 my-4 lg:flex lg:gap-4 ">
         {/* info pannel */}
         <div className="lg:w-96 border-2 border-lime-100 bg-lime-50 shadow-lg rounded-lg p-2 h-min space-y-4 mb-4">
+          <div className="flex items-center justify-center">
+            <button
+              className="shrink-0 rounded-full bg-lime-400 p-2"
+              onClick={() => toggleFavorite(charity)}
+            >
+              <BookmarkIcon
+                className={`h-8 w-8 ${
+                  hasFavorite(charity.slug)
+                    ? "text-neutral-200"
+                    : "text-red-500"
+                }`}
+              />
+            </button>
+          </div>
           <h3 className="text-xl font-bold">Information</h3>
           {charity.locationAddress && (
             <div className="flex gap-2 items-center">
@@ -69,6 +86,7 @@ const CharityDetail: FC<CharityDetailProps> = ({ charity }) => {
             </>
           )}
         </div>
+        {/* main content */}
         <div className="basis-3/4 justify-self-end space-y-4">
           {charity.description && (
             <div>
