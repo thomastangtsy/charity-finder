@@ -57,10 +57,25 @@ const Home: FC = () => {
         (!query && !browseState.charities.length) ? (
         <NoResult />
       ) : (
-        <CharityList
-          charities={query ? searchState.charities : browseState.charities}
-          navigateCharity={navigateCharity}
-        />
+        <>
+          {query && (
+            <h1 className="text-center text-2xl font-semibold mt-4">
+              Search results for{" "}
+              <span className="rounded bg-lime-100 border-lime-100 border-x-4 border-y-2">
+                {query}
+              </span>
+            </h1>
+          )}
+          {!query && (
+            <h1 className="text-center text-2xl font-semibold mt-4">
+              You may interested in
+            </h1>
+          )}
+          <CharityList
+            charities={query ? searchState.charities : browseState.charities}
+            navigateCharity={navigateCharity}
+          />
+        </>
       )}
     </div>
   );
