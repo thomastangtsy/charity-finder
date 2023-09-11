@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import CharityList from "../components/CharityList";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -14,6 +14,7 @@ const Home: FC = () => {
     [],
   );
 
+  const [isBrowseFetched, setIsBrowseFetched] = useState(false);
   const [searchParam] = useSearchParams();
   const query = useMemo(() => searchParam.get("query") ?? "", [searchParam]);
 
@@ -26,11 +27,16 @@ const Home: FC = () => {
 
   useEffect(() => {
     if (query) {
-      fetchSearch(query, 12);
-    } else {
+      fetchSearch(query, { take: 12 });
+    }
+  }, [fetchSearch, query]);
+
+  useEffect(() => {
+    if (!query && !isBrowseFetched) {
+      setIsBrowseFetched(true);
       fetchBrowse(cause, { take: 12 });
     }
-  }, [cause, fetchBrowse, fetchSearch, query]);
+  }, [cause, fetchBrowse, isBrowseFetched, query]);
 
   return (
     <div className="w-full">

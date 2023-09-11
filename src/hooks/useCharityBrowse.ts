@@ -16,13 +16,20 @@ type FetchFunction = (
 const useCharityBrowse = (apiKey: string) => {
   const [error, setError] = useState<Error | undefined>(undefined);
   const [loading, setLoading] = useState(false);
-  const [finished, setFinished] = useState(false);
   const [charities, setCharities] = useState<Array<Charity>>([]);
 
   const fetch: FetchFunction = useCallback(
-    async (cause, options) => {
-      if (loading || finished) return;
+    async (cause, options?) => {
+      let end = false;
+      setLoading((nowLoading) => {
+        if (nowLoading) end = true;
+        return nowLoading;
+      });
+      if (end) return;
+
       setLoading(true);
+      setError(undefined);
+      setCharities([]);
 
       const finalTake = applyMinMax(options?.take ?? 10, { min: 1, max: 100 });
       const finalPage = applyMinMax(options?.page ?? 1, { min: 1 });
@@ -41,10 +48,9 @@ const useCharityBrowse = (apiKey: string) => {
       } else {
         setError(new Error(await response.text()));
       }
-      setFinished(true);
       setLoading(false);
     },
-    [apiKey, finished, loading],
+    [apiKey],
   );
 
   return { charities, error, fetch, loading };

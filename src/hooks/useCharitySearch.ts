@@ -2,27 +2,35 @@ import { useCallback, useState } from "react";
 import Charity from "../models/charity";
 import { applyMinMax } from "../utils";
 
-type FetchFunction = (term: string, take?: number) => Promise<void>;
+interface SearchOption {
+  take?: number;
+  page?: number;
+}
 
 const useCharitySearch = (apiKey: string) => {
   const [error, setError] = useState<Error | undefined>(undefined);
   const [loading, setLoading] = useState(false);
-  const [finished, setFinished] = useState(false);
   const [charities, setCharities] = useState<Array<Charity>>([]);
 
-  const fetch: FetchFunction = useCallback(
-    async (term, take) => {
+  const fetch = useCallback(
+    async (term: string, option?: SearchOption): Promise<void> => {
       if (!term) {
         console.warn("Search term not provided when executing search.");
         return;
       }
 
-      if (loading || finished) return;
+      let end = false;
+      setLoading((current) => {
+        if (current) end = true;
+        return current;
+      });
+      if (end) return;
+
       setLoading(true);
       setError(undefined);
       setCharities([]);
 
-      const finalTake = applyMinMax(take ?? 10, { min: 1, max: 50 });
+      const finalTake = applyMinMax(option?.take ?? 10, { min: 1, max: 50 });
 
       const params = new URLSearchParams({
         apiKey,
@@ -37,10 +45,9 @@ const useCharitySearch = (apiKey: string) => {
       } else {
         setError(new Error(await response.text()));
       }
-      setFinished(true);
       setLoading(false);
     },
-    [apiKey, finished, loading],
+    [apiKey],
   );
 
   return { charities, error, fetch, loading };
