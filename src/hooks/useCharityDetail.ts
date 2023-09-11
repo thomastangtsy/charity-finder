@@ -28,6 +28,7 @@ const useCharityDetail = (apiKey: string) => {
         const responseJson = await response.json();
         const charityData = {
           ...responseJson.data.nonprofit,
+          slug: responseJson.data.nonprofit.primarySlug,
           nonprofitTags: responseJson.data.nonprofitTags,
         } as DetailCharity;
         setCharity(charityData);

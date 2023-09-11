@@ -1,8 +1,7 @@
+import CharityBase from "./charityBase";
 import Tag from "./tag";
 
-interface DetailCharity {
-  name: string;
-  primarySlug: string;
+interface DetailCharity extends CharityBase {
   description?: string;
   descriptionLong?: string;
   locationAddress?: string;

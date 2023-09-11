@@ -1,6 +1,6 @@
-interface Charity {
-  slug: string;
-  name: string;
+import CharityBase from "./charityBase";
+
+interface Charity extends CharityBase {
   description?: string;
   location?: string;
   tags?: Array<string>;
