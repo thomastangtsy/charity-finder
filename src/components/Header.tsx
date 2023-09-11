@@ -4,9 +4,14 @@ import { ChangeEventHandler, FC, useCallback, useState } from "react";
 interface HeaderProps {
   search: (term: string) => void;
   navigateHome: () => void;
+  navigateFavorites: () => void;
 }
 
-const Header: FC<HeaderProps> = ({ search, navigateHome }) => {
+const Header: FC<HeaderProps> = ({
+  search,
+  navigateHome,
+  navigateFavorites,
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -39,7 +44,10 @@ const Header: FC<HeaderProps> = ({ search, navigateHome }) => {
           >
             <MagnifyingGlassIcon className="h-6 w-6" />
           </button>
-          <button className="rounded bg-lime-600 p-2 ml-4">
+          <button
+            className="rounded bg-lime-600 p-2 ml-4"
+            onClick={navigateFavorites}
+          >
             <BookmarkIcon className="h-6 w-6" />
           </button>
         </div>
