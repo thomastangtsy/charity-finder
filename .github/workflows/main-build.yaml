@@ -1,0 +1,23 @@
+name: main build
+on:
+  push:
+    branches:
+      - "main"
+      - "stable"
+    paths-ignore:
+      - "**/*.md"
+      - .gitignore
+jobs:
+  lint:
+    name: Lint
+    uses: ./.github/workflows/lint.yaml
+  deploy:
+    name: Deploy
+    needs: lint
+    uses: ./.github/workflows/deployment.yaml
+    with:
+      project-name: ${{ vars.CLOUDFLARE_PAGES_NAME }}
+    secrets:
+      cf-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      cf-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      everyorg-api-key: ${{ secrets.EVERYORG_API_KEY }}

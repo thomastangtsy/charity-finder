@@ -1,0 +1,38 @@
+name: Deployment
+on:
+  workflow_call:
+    inputs:
+      project-name:
+        required: true
+        type: string
+    secrets:
+      cf-api-token:
+        required: true
+      cf-account-id:
+        required: true
+      everyorg-api-key:
+        required: true
+jobs:
+  deploy:
+    name: Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: yarn
+      - name: Setup environment
+        run: echo "VITE_EVERYORG_API_KEY=${{ secrets.everyorg-api-key }}" > .env
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.cf-api-token }}
+          accountId: ${{ secrets.cf-account-id }}
+          command: pages deploy ./dist --project-name=${{ inputs.project-name }}
