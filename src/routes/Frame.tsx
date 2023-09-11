@@ -17,9 +17,17 @@ const Frame: FC = () => {
     navigate("/");
   }, [navigate]);
 
+  const navigateFavorites = useCallback(() => {
+    navigate("/favorites");
+  }, [navigate]);
+
   return (
     <div className="w-full min-h-screen overflow-y-hidden overflow-x-auto">
-      <Header search={navigateSearch} navigateHome={navigateHome} />
+      <Header
+        search={navigateSearch}
+        navigateHome={navigateHome}
+        navigateFavorites={navigateFavorites}
+      />
       <Outlet />
     </div>
   );
