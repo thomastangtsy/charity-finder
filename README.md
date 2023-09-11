@@ -11,6 +11,7 @@ Easily search for charities in the city.
 ## Quick Start
 
 Copy and edit public API key from every.org:
+
 ```sh
 cp .env.example .env
 # Modify the environment variables
@@ -41,3 +42,7 @@ Build production code to `./dist`:
 ```sh
 yarn build
 ```
+
+## License
+
+This project is [MIT licensed](./LICENSE).
