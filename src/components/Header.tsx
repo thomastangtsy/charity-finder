@@ -19,9 +19,12 @@ const Header: FC<HeaderProps> = ({ search, navigateHome }) => {
   return (
     <header className="w-full bg-lime-900 text-white py-6">
       <div className="container mx-auto px-2 space-y-2 flex flex-col md:flex-row md:space-y-0 md:space-x-3 md:justify-between">
-        <h1 className="text-3xl font-bold text-center" onClick={navigateHome}>
+        <button
+          className="text-3xl font-bold text-center select-none"
+          onClick={navigateHome}
+        >
           Charity Finder
-        </h1>
+        </button>
         <div className="flex justify-center">
           <input
             className="rounded-l bg-white p-2 text-lime-900 w-full max-w-[24rem] lg:w-[24rem]"
