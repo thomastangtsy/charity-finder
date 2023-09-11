@@ -3,6 +3,7 @@
   "endOfLine": "lf",
   "importOrder": ["<THIRD_PARTY_MODULES>", "^[./]"],
   "importOrderCaseInsensitive": true,
+  "importOrderSortSpecifiers": true,
   "jsxSingleQuote": false,
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "semi": true,
