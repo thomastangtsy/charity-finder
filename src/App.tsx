@@ -1,10 +1,20 @@
-import { FC } from "react";
-import { BrowserRouter, Routes } from "react-router-dom";
+import { FC, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Frame from "./routes/Frame";
 
 const App: FC = () => {
-return (
+  const [searchTerm, setSerchTerm] = useState("");
+
+  return (
     <BrowserRouter>
       <Routes>
+        <Route
+          path="/"
+          element={
+            <Frame searchTerm={searchTerm} setSearchTerm={setSerchTerm} />
+          }
+        >
+        </Route>
       </Routes>
     </BrowserRouter>
   );
